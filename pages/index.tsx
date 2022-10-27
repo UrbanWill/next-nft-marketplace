@@ -1,5 +1,6 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 
+// hooks
 import { useGetBooksQuery } from "../generated/graphql";
 
 export default function Home() {

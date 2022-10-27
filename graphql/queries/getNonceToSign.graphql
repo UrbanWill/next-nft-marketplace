@@ -1,0 +1,5 @@
+query GetNonceToSign($walletAddress: String!) {
+  nonceToSign(walletAddress: $walletAddress) {
+    nonce
+  }
+}
