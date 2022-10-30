@@ -1,0 +1,13 @@
+mutation LoginWithWallet(
+  $walletAddress: String!
+  $message: String!
+  $signedMessage: String!
+) {
+  loginWithWallet(
+    walletAddress: $walletAddress
+    message: $message
+    signedMessage: $signedMessage
+  ) {
+    token
+  }
+}

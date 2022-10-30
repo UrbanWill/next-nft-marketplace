@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
 
 // hooks
-import { useApollo } from "../hooks/useApollo/useApollo";
+import { useApollo } from "../hooks/useApollo";
 
 // components
 import { Layout } from "../components/Layout";

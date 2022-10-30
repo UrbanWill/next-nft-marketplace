@@ -50,6 +50,7 @@ export type MutationAddBookArgs = {
 export type MutationLoginWithWalletArgs = {
   message: Scalars["String"];
   signedMessage: Scalars["String"];
+  walletAddress: Scalars["String"];
 };
 
 export type Nonce = {
@@ -70,6 +71,17 @@ export type QueryNonceToSignArgs = {
 export type Token = {
   __typename?: "Token";
   token: Scalars["String"];
+};
+
+export type LoginWithWalletMutationVariables = Exact<{
+  walletAddress: Scalars["String"];
+  message: Scalars["String"];
+  signedMessage: Scalars["String"];
+}>;
+
+export type LoginWithWalletMutation = {
+  __typename?: "Mutation";
+  loginWithWallet: { __typename?: "Token"; token: string };
 };
 
 export type GetBooksQueryVariables = Exact<{ [key: string]: never }>;
@@ -93,6 +105,66 @@ export type GetNonceToSignQuery = {
   nonceToSign: { __typename?: "Nonce"; nonce: number };
 };
 
+export const LoginWithWalletDocument = gql`
+  mutation LoginWithWallet(
+    $walletAddress: String!
+    $message: String!
+    $signedMessage: String!
+  ) {
+    loginWithWallet(
+      walletAddress: $walletAddress
+      message: $message
+      signedMessage: $signedMessage
+    ) {
+      token
+    }
+  }
+`;
+export type LoginWithWalletMutationFn = Apollo.MutationFunction<
+  LoginWithWalletMutation,
+  LoginWithWalletMutationVariables
+>;
+
+/**
+ * __useLoginWithWalletMutation__
+ *
+ * To run a mutation, you first call `useLoginWithWalletMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginWithWalletMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginWithWalletMutation, { data, loading, error }] = useLoginWithWalletMutation({
+ *   variables: {
+ *      walletAddress: // value for 'walletAddress'
+ *      message: // value for 'message'
+ *      signedMessage: // value for 'signedMessage'
+ *   },
+ * });
+ */
+export function useLoginWithWalletMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginWithWalletMutation,
+    LoginWithWalletMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    LoginWithWalletMutation,
+    LoginWithWalletMutationVariables
+  >(LoginWithWalletDocument, options);
+}
+export type LoginWithWalletMutationHookResult = ReturnType<
+  typeof useLoginWithWalletMutation
+>;
+export type LoginWithWalletMutationResult =
+  Apollo.MutationResult<LoginWithWalletMutation>;
+export type LoginWithWalletMutationOptions = Apollo.BaseMutationOptions<
+  LoginWithWalletMutation,
+  LoginWithWalletMutationVariables
+>;
 export const GetBooksDocument = gql`
   query getBooks {
     books {
