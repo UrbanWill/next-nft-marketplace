@@ -14,9 +14,8 @@ export const useSigninWIthWallet = () => {
   const [loginWithWalletMutation] = useLoginWithWalletMutation();
 
   const handleLogin = async () => {
-    const provider = new ethers.providers.Web3Provider(
-      window.web3.currentProvider
-    );
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
     const walletAddress = await signer.getAddress();
 

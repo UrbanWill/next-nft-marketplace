@@ -1,5 +1,10 @@
+import { MetaMaskInpageProvider } from "@metamask/providers";
+
 /// <reference types="react-scripts" />
 
-interface Window {
-  web3: any;
+declare global {
+  interface Window {
+    ethereum?: MetaMaskInpageProvider;
+    web3: any;
+  }
 }
