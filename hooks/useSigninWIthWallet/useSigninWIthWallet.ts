@@ -35,10 +35,10 @@ export const useSigninWIthWallet = () => {
           ({
             data: {
               // @ts-ignore
-              loginWithWallet: { token },
+              loginWithWallet,
             },
           }) => {
-            console.log({ token });
+            console.log({ loginWithWallet });
           }
         );
       } catch (error) {

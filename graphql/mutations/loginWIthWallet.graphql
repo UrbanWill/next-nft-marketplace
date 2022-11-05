@@ -8,6 +8,12 @@ mutation LoginWithWallet(
     message: $message
     signedMessage: $signedMessage
   ) {
+    user {
+      id
+      email
+      role
+      profilePicture
+    }
     token
   }
 }
