@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
   useContext,
   createContext,
@@ -37,6 +38,9 @@ export function AuthProvider({
 }): JSX.Element {
   const [user, setUser] = useState<User>(initialUser);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  const router = useRouter();
+
   const { handleLogin } = useSigninWIthWallet();
 
   useEffect(() => {
@@ -50,8 +54,6 @@ export function AuthProvider({
     setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
   }, []);
 
-  let test = "";
-
   const handleAuthLogin = useCallback(async (): Promise<void> => {
     const { token, user } = (await handleLogin()) ?? {};
     if (token && user) {
@@ -62,13 +64,15 @@ export function AuthProvider({
         localStorage.setItem(item, user[item])
       );
       setIsAuthenticated(true);
+      router.push("/allbooks");
     }
-  }, [handleLogin]);
+  }, [handleLogin, router]);
 
   const handleAuthLogout = useCallback((): void => {
     localStorage.clear();
     setIsAuthenticated(false);
-  }, []);
+    router.push("/");
+  }, [router]);
 
   // Make the provider update only when it should
   const memoedAuth = useMemo(
