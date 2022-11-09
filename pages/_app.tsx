@@ -14,13 +14,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider>
-      <AuthProvider>
-        <ApolloProvider client={apolloClient}>
+      <ApolloProvider client={apolloClient}>
+        <AuthProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </ApolloProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </ApolloProvider>
     </ChakraProvider>
   );
 }

@@ -1,9 +1,32 @@
-import { useContext, createContext, ReactNode } from "react";
+import {
+  useContext,
+  createContext,
+  ReactNode,
+  useMemo,
+  useCallback,
+  useState,
+  useEffect,
+} from "react";
 
 // types
-import { UserWithToken, Role } from "../../generated/graphql";
+import { User, Role } from "../../generated/graphql";
 
-interface IAuthContext extends UserWithToken {}
+// hooks
+import { useSigninWIthWallet } from "../../hooks/useSigninWIthWallet";
+
+interface IAuthContext {
+  handleAuthLogin: () => void;
+  handleAuthLogout: () => void;
+  user: User;
+  isAuthenticated: boolean;
+}
+
+const initialUser: User = {
+  id: "",
+  email: "",
+  profilePicture: "",
+  role: Role.User,
+};
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
@@ -12,20 +35,54 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const mockedUserWithToken: UserWithToken = {
-    user: {
-      id: "1",
-      email: "demo@gmail.com",
-      profilePicture: "",
-      role: Role.User,
-    },
-    token: "token",
-  };
+  const [user, setUser] = useState<User>(initialUser);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const { handleLogin } = useSigninWIthWallet();
+
+  useEffect(() => {
+    const storageUser: User = {
+      id: localStorage.getItem("id") ?? "",
+      email: localStorage.getItem("email") ?? "",
+      profilePicture: localStorage.getItem("profilePicture") ?? "",
+      role: (localStorage.getItem("role") as Role) ?? Role.User,
+    };
+    setUser(storageUser);
+    setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
+  }, []);
+
+  let test = "";
+
+  const handleAuthLogin = useCallback(async (): Promise<void> => {
+    const { token, user } = (await handleLogin()) ?? {};
+    if (token && user) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("isAuthenticated", "true");
+      Object.keys(user).map((item) =>
+        // @ts-ignore if the value is null, set the key to an empty string
+        localStorage.setItem(item, user[item])
+      );
+      setIsAuthenticated(true);
+    }
+  }, [handleLogin]);
+
+  const handleAuthLogout = useCallback((): void => {
+    localStorage.clear();
+    setIsAuthenticated(false);
+  }, []);
+
+  // Make the provider update only when it should
+  const memoedAuth = useMemo(
+    () => ({
+      user,
+      handleAuthLogin,
+      handleAuthLogout,
+      isAuthenticated,
+    }),
+    [handleAuthLogin, handleAuthLogout, user, isAuthenticated]
+  );
 
   return (
-    <AuthContext.Provider value={mockedUserWithToken}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={memoedAuth}>{children}</AuthContext.Provider>
   );
 }
 
