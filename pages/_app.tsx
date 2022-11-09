@@ -1,6 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
+import { AuthProvider } from "../contexts/useAuth/useAuth";
 
 // hooks
 import { useApollo } from "../hooks/useApollo";
@@ -13,11 +14,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider>
-      <ApolloProvider client={apolloClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ApolloProvider>
+      <AuthProvider>
+        <ApolloProvider client={apolloClient}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ApolloProvider>
+      </AuthProvider>
     </ChakraProvider>
   );
 }

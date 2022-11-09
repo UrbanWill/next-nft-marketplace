@@ -2,9 +2,13 @@ import { Box, Heading } from "@chakra-ui/react";
 
 // hooks
 import { useGetBooksQuery } from "../generated/graphql";
+import useAuth from "../contexts/useAuth/useAuth";
 
 export default function Home() {
   const { data: { books } = {}, loading } = useGetBooksQuery();
+  const { user } = useAuth();
+
+  console.log({ user });
 
   if (loading) {
     return <Heading as="h3">Loading...</Heading>;
