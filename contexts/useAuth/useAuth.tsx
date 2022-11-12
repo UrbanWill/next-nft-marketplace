@@ -64,6 +64,7 @@ export function AuthProvider({
         localStorage.setItem(item, user[item])
       );
       setIsAuthenticated(true);
+      setUser(user);
       router.push("/allbooks");
     }
   }, [handleLogin, router]);

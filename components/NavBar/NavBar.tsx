@@ -25,9 +25,14 @@ const NavBar: FC = () => {
           <ChakraLink>Home</ChakraLink>
         </Link>
         {isAuthenticated && (
-          <Link href="/allbooks" passHref legacyBehavior>
-            <ChakraLink>All books</ChakraLink>
-          </Link>
+          <>
+            <Link href="/allbooks" passHref legacyBehavior>
+              <ChakraLink>All books</ChakraLink>
+            </Link>
+            <Link href="/profile" passHref legacyBehavior>
+              <ChakraLink>Profile</ChakraLink>
+            </Link>
+          </>
         )}
       </Flex>
       {isAuthenticated ? (
