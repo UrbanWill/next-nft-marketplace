@@ -6,7 +6,8 @@ import { Box, Flex, Button, Link as ChakraLink } from "@chakra-ui/react";
 import { useAuth } from "../../contexts/useAuth";
 
 const NavBar: FC = () => {
-  const { handleAuthLogin, handleAuthLogout, isAuthenticated } = useAuth();
+  const { handleAuthLogin, handleAuthLogout, isAuthenticated, isLoading } =
+    useAuth();
 
   return (
     <Flex backgroundColor="blue.400" height="4rem" alignItems="center" px={5}>
@@ -25,9 +26,14 @@ const NavBar: FC = () => {
           <ChakraLink>Home</ChakraLink>
         </Link>
         {isAuthenticated && (
-          <Link href="/allbooks" passHref legacyBehavior>
-            <ChakraLink>All books</ChakraLink>
-          </Link>
+          <>
+            <Link href="/allbooks" passHref legacyBehavior>
+              <ChakraLink>All books</ChakraLink>
+            </Link>
+            <Link href="/profile" passHref legacyBehavior>
+              <ChakraLink>Profile</ChakraLink>
+            </Link>
+          </>
         )}
       </Flex>
       {isAuthenticated ? (
@@ -36,7 +42,9 @@ const NavBar: FC = () => {
         </Box>
       ) : (
         <Box ml="auto">
-          <Button onClick={handleAuthLogin}>Login</Button>
+          <Button onClick={handleAuthLogin} isLoading={isLoading}>
+            Login
+          </Button>
         </Box>
       )}
     </Flex>
