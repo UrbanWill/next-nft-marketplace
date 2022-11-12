@@ -20,6 +20,7 @@ interface IAuthContext {
   handleAuthLogout: () => void;
   user: User;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const initialUser: User = {
@@ -38,12 +39,14 @@ export function AuthProvider({
 }): JSX.Element {
   const [user, setUser] = useState<User>(initialUser);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
   const { handleLogin } = useSigninWIthWallet();
 
   useEffect(() => {
+    setIsLoading(true);
     const storageUser: User = {
       id: localStorage.getItem("id") ?? "",
       email: localStorage.getItem("email") ?? "",
@@ -52,9 +55,11 @@ export function AuthProvider({
     };
     setUser(storageUser);
     setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
+    setIsLoading(false);
   }, []);
 
   const handleAuthLogin = useCallback(async (): Promise<void> => {
+    setIsLoading(true);
     const { token, user } = (await handleLogin()) ?? {};
     if (token && user) {
       localStorage.setItem("token", token);
@@ -67,6 +72,7 @@ export function AuthProvider({
       setUser(user);
       router.push("/allbooks");
     }
+    setIsLoading(false);
   }, [handleLogin, router]);
 
   const handleAuthLogout = useCallback((): void => {
@@ -82,8 +88,9 @@ export function AuthProvider({
       handleAuthLogin,
       handleAuthLogout,
       isAuthenticated,
+      isLoading,
     }),
-    [handleAuthLogin, handleAuthLogout, user, isAuthenticated]
+    [user, handleAuthLogin, handleAuthLogout, isAuthenticated, isLoading]
   );
 
   return (

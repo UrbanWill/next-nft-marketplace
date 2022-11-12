@@ -23,11 +23,8 @@ export default function Profile() {
     getChain();
   }, [getChain, provider]);
 
-  provider.on("network", (newNetwork, oldNetwork) => {
-    if (oldNetwork) {
-      console.log({ newNetwork });
-      window.location.reload();
-    }
+  provider.on("network", (newNetwork) => {
+    setChain(newNetwork);
   });
 
   return (

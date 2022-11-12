@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 import { useAuth } from "../../contexts/useAuth";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const { push } = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isLoading && !isAuthenticated) {
       push("/");
     }
-  }, [isAuthenticated, push]);
+  }, [isAuthenticated, push, isLoading]);
 
   return <>{isAuthenticated ? children : null}</>;
 };
