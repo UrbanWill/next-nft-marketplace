@@ -15,7 +15,9 @@ export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
-const uri = process.env.NFT_API_URL || "http://localhost:4000";
+// const uri = process.env.NFT_API_URL || "http://localhost:4000";
+const uri =
+  "https://main--willian-urbans-team-3zfryq.apollographos.net/graphql";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -40,6 +42,7 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
+      "Access-Control-Allow-Origin": "*",
     },
   };
 });

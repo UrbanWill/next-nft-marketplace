@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next . --fix",
-    "codegen": "graphql-codegen --config codegen-dev.yml"
+    "codegen:auth": "graphql-codegen --config codegen-auth-dev.yml",
+    "codegen:thegraph": "graphql-codegen --config codegen-thegraph-dev.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.7.1",
