@@ -9,3 +9,5 @@ export const GOERLI_RPC_URL =
 
 export const BASIC_NFT_CONTRACT_ADDRESS =
   "0xFc9a7b7337c98B02949F8Ce5a9Dc1BA2a38aff6B";
+
+export const IPFS_URL = "https://ipfs.io/ipfs/";
