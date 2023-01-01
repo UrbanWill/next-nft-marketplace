@@ -1,7 +1,7 @@
 import { Box, Heading } from "@chakra-ui/react";
 
 // hooks
-import { useGetBooksQuery } from "../../generated/graphql";
+import { useGetBooksQuery } from "../../generated/auth";
 
 export default function AllBooks() {
   const { data: { books } = {}, loading } = useGetBooksQuery();

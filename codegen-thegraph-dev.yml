@@ -1,0 +1,11 @@
+overwrite: true
+schema: "https://api.studio.thegraph.com/query/36731/nft-marketplace/v0.0.3"
+require:
+  - ts-node/register
+documents: "graphql/theGraph/**/*.graphql"
+generates:
+  generated//theGraph.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

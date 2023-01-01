@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+
 import {
   ApolloClient,
   HttpLink,
@@ -6,16 +7,19 @@ import {
   from,
   NormalizedCacheObject,
 } from "@apollo/client";
+import { RetryLink } from "@apollo/client/link/retry";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import type { AppProps } from "next/app";
+
 import merge from "deepmerge";
 
-export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
+import { AUTH_URI, THE_GRAPH_URI } from "../../utils/constants";
+
+const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
+const AUTH_OPERATIONS = ["GetNonceToSign", "LoginWithWallet", "getBooks"];
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
-
-const uri = process.env.NFT_API_URL || "http://localhost:4000";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -28,8 +32,13 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = new HttpLink({
-  uri, // Server URL (must be absolute)
+  uri: AUTH_URI, // Server URL (must be absolute)
   credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
+});
+
+const httpTheGraphLink = new HttpLink({
+  uri: THE_GRAPH_URI,
+  credentials: "same-origin",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -44,10 +53,19 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+/** TODO: This would be better handled on BE through supergraph federation */
+const directionalLink = new RetryLink().split(
+  ({ operationName }) => {
+    return AUTH_OPERATIONS.includes(operationName);
+  },
+  authLink.concat(from([errorLink, httpLink])),
+  httpTheGraphLink.concat(from([errorLink, httpTheGraphLink]))
+);
+
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
-    link: authLink.concat(from([errorLink, httpLink])),
+    link: directionalLink,
     cache: new InMemoryCache(),
   });
 }

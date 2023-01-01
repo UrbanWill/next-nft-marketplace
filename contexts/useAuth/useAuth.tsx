@@ -10,7 +10,7 @@ import {
 } from "react";
 
 // types
-import { User, Role } from "../../generated/graphql";
+import { User, Role } from "../../generated/auth";
 
 // hooks
 import { useSigninWIthWallet } from "../../hooks/useSigninWIthWallet";

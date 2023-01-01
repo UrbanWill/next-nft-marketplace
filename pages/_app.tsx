@@ -11,7 +11,7 @@ import { AuthProvider } from "../contexts/useAuth/useAuth";
 import { Layout } from "../components/Layout";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 
-const noAuthRequired = ["/"];
+const noAuthRequired = ["/", "/activeItems"];
 
 export default function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState);

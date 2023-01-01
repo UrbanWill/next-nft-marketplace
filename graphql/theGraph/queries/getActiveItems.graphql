@@ -1,0 +1,10 @@
+query ActiveItems {
+  activeItems {
+    id
+    buyer
+    seller
+    nftAddress
+    tokenId
+    price
+  }
+}
