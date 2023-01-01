@@ -11,11 +11,8 @@ export default function AllBooks() {
   }
 
   if (error) {
-    console.error(error);
     return <Box textColor="red">Error</Box>;
   }
-
-  console.log({ activeItems });
 
   return (
     <Box>
