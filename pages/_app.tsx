@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
@@ -19,15 +20,16 @@ import { IS_DEV_MODE } from "../utils/constants";
 const noAuthRequired = ["/", "/activeItems"];
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient());
   const apolloClient = useApollo(pageProps.initialApolloState);
   const { pathname } = useRouter();
 
-  const queryClient = new QueryClient();
+  // const queryClient = new QueryClient();
 
   return (
-    <ChakraProvider>
-      <QueryClientProvider client={queryClient}>
-        {IS_DEV_MODE && <ReactQueryDevtools initialIsOpen={false} />}
+    <QueryClientProvider client={queryClient}>
+      {IS_DEV_MODE && <ReactQueryDevtools initialIsOpen={false} />}
+      <ChakraProvider>
         <ApolloProvider client={apolloClient}>
           <AuthProvider>
             <Layout>
@@ -41,7 +43,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </Layout>
           </AuthProvider>
         </ApolloProvider>
-      </QueryClientProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
