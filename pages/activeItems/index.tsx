@@ -1,22 +1,17 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
-// hooks
-import { useActiveItemsQuery } from "../../generated/theGraph";
+// graphql
+import { initializeApollo } from "../../hooks/useApollo/useApollo";
+import { ActiveItemsDocument, ActiveItem } from "../../generated/theGraph";
 
 // components
 import { NFTCard } from "../../components/NFTCard";
 
-export default function AllBooks() {
-  const { data: { activeItems } = {}, loading, error } = useActiveItemsQuery();
-
-  if (loading) {
-    return <Heading as="h3">Loading...</Heading>;
-  }
-
-  if (error) {
-    return <Box textColor="red">Error</Box>;
-  }
-
+export default function ActiveItems({
+  activeItems,
+}: {
+  activeItems: ActiveItem[];
+}) {
   return (
     <Box>
       <Box>All Items</Box>
@@ -25,4 +20,17 @@ export default function AllBooks() {
       ))}
     </Box>
   );
+}
+
+export async function getServerSideProps() {
+  const client = initializeApollo();
+  const { data: { activeItems } = {} } = await client.query({
+    query: ActiveItemsDocument,
+  });
+
+  return {
+    props: {
+      activeItems,
+    },
+  };
 }
