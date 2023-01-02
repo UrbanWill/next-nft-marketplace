@@ -5,7 +5,7 @@ import {
   useGetNonceToSignLazyQuery,
   useLoginWithWalletMutation,
   UserWithToken,
-} from "../../generated/auth";
+} from "../../../generated/auth";
 
 export const useSigninWIthWallet = () => {
   const [getNonceToSign] = useGetNonceToSignLazyQuery({

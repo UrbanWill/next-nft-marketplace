@@ -76,7 +76,9 @@ interface IInitializeApollo {
   initialState?: InitialState | null;
 }
 
-export function initializeApollo(initialState: IInitializeApollo) {
+export function initializeApollo(
+  initialState: IInitializeApollo | null = null
+) {
   const _apolloClient = apolloClient ?? createApolloClient();
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
