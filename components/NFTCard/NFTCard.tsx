@@ -6,8 +6,16 @@ import Image from "next/image";
 import { useGetTokenById } from "../../hooks/queries/useGetTokenById";
 import { useGetTokenByURI } from "../../hooks/queries/useGetTokenByURI";
 
-const NFTCard: FC = () => {
-  const { data: tokenURI, isLoading: isTokenByIdLoading } = useGetTokenById(1);
+// types
+import { ActiveItem } from "../../generated/theGraph";
+interface INFTCard {
+  activeItem: ActiveItem;
+}
+
+const NFTCard: FC<INFTCard> = ({ activeItem }) => {
+  const { tokenId } = activeItem;
+  const { data: tokenURI, isLoading: isTokenByIdLoading } =
+    useGetTokenById(tokenId);
   const { data: tokenData, isLoading: isTokenDataLoading } =
     useGetTokenByURI(tokenURI);
 

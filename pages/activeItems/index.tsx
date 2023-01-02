@@ -21,7 +21,7 @@ export default function AllBooks() {
     <Box>
       <Box>All Items</Box>
       {activeItems?.map((item) => (
-        <NFTCard key={item.id} />
+        <NFTCard key={item.id} activeItem={item} />
       ))}
     </Box>
   );
