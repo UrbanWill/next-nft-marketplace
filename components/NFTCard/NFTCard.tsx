@@ -1,40 +1,24 @@
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 import { Box } from "@chakra-ui/react";
-import { ethers } from "ethers";
 import Image from "next/image";
 
-// constants
-import { IPFS_URL } from "../../utils/constants";
+// hooks
+import { useGetTokenById } from "../../hooks/queries/useGetTokenById";
+import { useGetTokenByURI } from "../../hooks/queries/useGetTokenByURI";
 
-interface INFTCard {
-  basicNftContract: ethers.Contract;
-}
+const NFTCard: FC = () => {
+  const { data: tokenURI, isLoading: isTokenByIdLoading } = useGetTokenById(1);
+  const { data: tokenData, isLoading: isTokenDataLoading } =
+    useGetTokenByURI(tokenURI);
 
-const NFTCard: FC<INFTCard> = ({ basicNftContract }) => {
-  const [name, setName] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const { name, image } = tokenData ?? {};
 
-  const getTokenUri = async () => {
-    const tokenURI = await basicNftContract.tokenURI(1);
-    const requestURL = tokenURI.replace("ipfs://", IPFS_URL);
-    const tokenURIResponse = await (await fetch(requestURL)).json();
-    const imageURI = tokenURIResponse.image;
-    const imageURIURL = imageURI.replace("ipfs://", IPFS_URL);
-    setImageUrl(imageURIURL);
-    setName(tokenURIResponse.name);
-  };
-
-  useEffect(() => {
-    getTokenUri();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!name) return <Box>Loading...</Box>;
+  if (isTokenByIdLoading || isTokenDataLoading) return <Box>Loading...</Box>;
 
   return (
     <Box border="1px solid" my="1">
       <Box>{name}</Box>
-      <Image src={imageUrl} alt="NFT Image" width={300} height={300} />
+      <Image src={image} alt="NFT Image" width={300} height={300} />
     </Box>
   );
 };
