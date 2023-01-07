@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://api.studio.thegraph.com/query/36731/nft-marketplace/v0.0.3"
+schema: "https://api.thegraph.com/subgraphs/name/urbanwill/nft-marketplace"
 require:
   - ts-node/register
 documents: "graphql/theGraph/**/*.graphql"

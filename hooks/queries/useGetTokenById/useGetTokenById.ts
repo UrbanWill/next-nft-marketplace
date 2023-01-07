@@ -6,14 +6,18 @@ import BasicNft from "../../../contracts/abis/BasicNft.json";
 
 // constants
 import {
-  GOERLI_RPC_URL,
+  MATIC_RPC_URL,
   BASIC_NFT_CONTRACT_ADDRESS,
+  MATIC_NETWORK_ID,
 } from "../../../utils/constants";
 
 // query keys
 import { TOKEN_BY_ID } from "../../../utils/queryKeys";
 
-const provider = new ethers.providers.JsonRpcProvider(GOERLI_RPC_URL, 5);
+const provider = new ethers.providers.JsonRpcProvider(
+  MATIC_RPC_URL,
+  MATIC_NETWORK_ID
+);
 const basicNftContract = new ethers.Contract(
   BASIC_NFT_CONTRACT_ADDRESS,
   BasicNft.abi,
