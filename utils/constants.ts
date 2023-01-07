@@ -1,6 +1,5 @@
 export const AUTH_URI = process.env.NFT_API_URL || "http://localhost:4000";
 export const IS_DEV_MODE = process.env.NODE_ENV === "development";
-export const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL;
 
 export const THE_GRAPH_URI =
   process.env.THE_GRAPH_URL ||

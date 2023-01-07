@@ -3,7 +3,7 @@ import axios from "axios";
 
 // constants
 import { NFTS_BY_WALLET } from "../../../utils/queryKeys";
-import { ALCHEMY_API_URL } from "../../../utils/constants";
+import { MATIC_RPC_URL } from "../../../utils/constants";
 
 interface NftMetadata {
   name: string;
@@ -28,7 +28,7 @@ export const fetchNfts = async (
   walletAddress: string
 ): Promise<NftResponse> => {
   const { data } = await axios.get(
-    `${ALCHEMY_API_URL}/getNFTs/?owner=${walletAddress}`
+    `${MATIC_RPC_URL}/getNFTs/?owner=${walletAddress}`
   );
   return data;
 };

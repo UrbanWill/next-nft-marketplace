@@ -10,7 +10,6 @@ const nextConfig = {
   },
   env: {
     NFT_API_URL: process.env.NFT_API_URL,
-    ALCHEMY_API_URL: process.env.ALCHEMY_API_URL,
   },
 };
 
