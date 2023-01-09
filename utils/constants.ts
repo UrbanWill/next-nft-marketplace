@@ -3,7 +3,7 @@ export const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
 export const THE_GRAPH_URI =
   process.env.THE_GRAPH_URL ||
-  "https://api.thegraph.com/subgraphs/name/urbanwill/nft-marketplace";
+  "https://api.thegraph.com/subgraphs/name/urbanwill/graph-nft-marketplace";
 
 export const GOERLI_RPC_URL =
   "https://eth-goerli.g.alchemy.com/v2/aqz1LBXUFqx_-vK0i5He9wbAuZrknsHk";
