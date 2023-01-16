@@ -27,8 +27,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState);
   const { pathname } = useRouter();
 
-  // const queryClient = new QueryClient();
-
   return (
     <QueryClientProvider client={queryClient}>
       {IS_DEV_MODE && <ReactQueryDevtools initialIsOpen={false} />}
