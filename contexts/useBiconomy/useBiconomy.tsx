@@ -37,7 +37,6 @@ export function BiconomyProvider({
 
   useEffect(() => {
     const initBiconomy = async () => {
-      console.log("called initBiconomy");
       setBiconomy(
         new Biconomy(window.ethereum as ExternalProvider, {
           apiKey: BICONOMY_API_KEY,
