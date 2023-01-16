@@ -21,22 +21,18 @@ const useHandleListItem = () => {
 
   const { id: address } = user;
 
-  console.log({ biconomy });
-
   const handleListItem = async (nft: INft) => {
     const {
       id: { tokenId },
       contract: { address: NftContractAddress },
     } = nft;
     const price = 0.05;
-    console.log({ tokenId, address, price });
     const userAddress = address;
 
     const ethersProvider = new ethers.providers.Web3Provider(
       window.ethereum as any
     );
 
-    // await ethersProvider.send("eth_requestAccounts", []);
     const signer = await ethersProvider.getSigner();
 
     const domainType = [
@@ -93,8 +89,53 @@ const useHandleListItem = () => {
     ]);
 
     let { r, s, v } = getSignatureParametersEthers(signature);
-    // sendSignedTransaction(address!, functionSignature, r, s, v)
+    sendSignedTransaction(address!, functionSignature, r, s, v);
     console.log({ r, s, v });
+  };
+
+  const sendSignedTransaction = async (
+    userAddress: string,
+    functionData: string,
+    r: string,
+    s: string,
+    v: number
+  ) => {
+    try {
+      const provider = await biconomy?.provider;
+      const contractInstance = new ethers.Contract(
+        NFT_MARKETPLACE_CONTRACT_ADDRESS,
+        NftMarketplace.abi,
+        biconomy?.ethersProvider
+      );
+      let { data } =
+        await contractInstance.populateTransaction.executeMetaTransaction(
+          userAddress,
+          functionData,
+          r,
+          s,
+          v
+        );
+      let txParams = {
+        data: data,
+        to: NFT_MARKETPLACE_CONTRACT_ADDRESS,
+        from: userAddress,
+        signatureType: "EIP712_SIGN",
+      };
+
+      console.log({ txParams });
+
+      // @ts-ignore
+      const tx = await provider.send("eth_sendTransaction", [txParams]);
+      console.log(tx);
+      biconomy?.on("txHashGenerated", (data: any) => {
+        console.log(data);
+      });
+      biconomy?.on("txMined", (data: any) => {
+        console.log(data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {
