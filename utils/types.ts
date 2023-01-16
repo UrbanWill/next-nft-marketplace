@@ -1,3 +1,20 @@
+interface INftMetadata {
+  name: string;
+  description: string;
+  image: string;
+}
+
+export interface INft {
+  title: string;
+  id: {
+    tokenId: string;
+  };
+  metadata: INftMetadata;
+  contract: {
+    address: string;
+  };
+}
+
 export type ExternalProvider = {
   isMetaMask?: boolean;
   isStatus?: boolean;

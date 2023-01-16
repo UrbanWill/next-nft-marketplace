@@ -5,23 +5,11 @@ import axios from "axios";
 import { NFTS_BY_WALLET } from "../../../utils/queryKeys";
 import { MATIC_RPC_URL } from "../../../utils/constants";
 
-interface NftMetadata {
-  name: string;
-  description: string;
-  image: string;
-}
-
-interface Nft {
-  title: string;
-  id: {
-    tokenId: string;
-  };
-  metadata: NftMetadata;
-}
-
+// types
+import { INft } from "../../../utils/types";
 interface NftResponse {
   blockNumber: string;
-  ownedNfts: Nft[];
+  ownedNfts: INft[];
 }
 
 export const fetchNfts = async (

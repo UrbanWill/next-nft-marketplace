@@ -1,9 +1,12 @@
-import { Box, Heading, Image } from "@chakra-ui/react";
+import { Box, Heading, Image, Button } from "@chakra-ui/react";
 
 // hooks
 import { useGetNftsByWallet } from "../../hooks/queries/useGetNftsByWallet";
 import { useAuth } from "../../contexts/useAuth";
 import { useBiconomy } from "../../contexts/useBiconomy";
+
+// types
+import { INft } from "../../utils/types";
 
 export default function MyItems() {
   const { user } = useAuth();
@@ -17,6 +20,15 @@ export default function MyItems() {
   if (isLoading) {
     return <Heading as="h3">Loading...</Heading>;
   }
+
+  const handleListItem = (nft: INft) => {
+    const {
+      id: { tokenId },
+      contract: { address },
+    } = nft;
+    const price = 0.05;
+    console.log({ tokenId, address, price });
+  };
 
   return (
     <Box>
@@ -33,6 +45,7 @@ export default function MyItems() {
           >
             <Box>{`Title: ${title}`}</Box>
             <Image src={image} alt="NFT Image" width={300} height={300} />
+            <Button onClick={() => handleListItem(nft)}>List item</Button>
           </Box>
         );
       })}
