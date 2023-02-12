@@ -26,7 +26,7 @@ const useHandleListItem = () => {
       id: { tokenId },
       contract: { address: NftContractAddress },
     } = nft;
-    const price = 0.05;
+    const price = 2;
     const userAddress = address;
 
     const ethersProvider = new ethers.providers.Web3Provider(
@@ -62,7 +62,7 @@ const useHandleListItem = () => {
     let nonce = await contractInstance.getNonce(userAddress);
     const contractInterface = new ethers.utils.Interface(NftMarketplace.abi);
     const functionSignature = contractInterface.encodeFunctionData("listItem", [
-      NftContractAddress,
+      ethers.utils.getAddress(NftContractAddress),
       tokenId,
       price,
     ]);
