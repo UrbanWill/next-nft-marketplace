@@ -17,7 +17,7 @@ import merge from "deepmerge";
 import { AUTH_URI, THE_GRAPH_URI } from "../../utils/constants";
 
 const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
-const AUTH_OPERATIONS = ["GetNonceToSign", "LoginWithWallet", "getBooks"];
+const AUTH_OPERATIONS = ["GetNonceToSign", "LoginWithWallet"];
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
