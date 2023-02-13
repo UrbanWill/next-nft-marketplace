@@ -70,7 +70,7 @@ export function AuthProvider({
       );
       setIsAuthenticated(true);
       setUser(user);
-      router.push("/allbooks");
+      router.push("/activeItems");
     }
     setIsLoading(false);
   }, [handleLogin, router]);
