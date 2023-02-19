@@ -37,14 +37,13 @@ export function BiconomyProvider({
 
   useEffect(() => {
     const initBiconomy = async () => {
-      setBiconomy(
-        new Biconomy(window.ethereum as ExternalProvider, {
-          apiKey: BICONOMY_API_KEY,
-          debug: true,
-          contractAddresses: [NFT_MARKETPLACE_CONTRACT_ADDRESS],
-        })
-      );
-      await biconomy?.init();
+      const biconomy = new Biconomy(window.ethereum as ExternalProvider, {
+        apiKey: BICONOMY_API_KEY,
+        debug: true,
+        contractAddresses: [NFT_MARKETPLACE_CONTRACT_ADDRESS],
+      });
+      await biconomy.init();
+      setBiconomy(biconomy);
     };
     if (isAuthenticated) {
       initBiconomy();
