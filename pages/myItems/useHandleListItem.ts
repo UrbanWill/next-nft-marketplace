@@ -7,7 +7,7 @@ import { ethers, ContractInterface } from "ethers";
 import { getSignatureParametersEthers } from "../../utils";
 
 // constants
-import { NFT_MARKETPLACE_CONTRACT_ADDRESS } from "../../utils/constants";
+import { NFT_MARKETPLACE_CONTRACT_ADDRESS_EIP_712 } from "../../utils/constants";
 
 // abis
 import NftMarketplace from "../../contracts/abis/NftMarketplace.json";
@@ -19,21 +19,26 @@ const useHandleListItem = () => {
   const { user } = useAuth();
   const { biconomy } = useBiconomy();
 
-  const { id: address } = user;
+  const { id: userAddress } = user;
 
   const handleListItem = async (nft: INft) => {
+    if (!biconomy) {
+      console.log("biconomy is not initialized");
+      return;
+    }
     const {
       id: { tokenId },
       contract: { address: NftContractAddress },
     } = nft;
-    const price = 2;
-    const userAddress = address;
+    // const price = 2;
 
     const ethersProvider = new ethers.providers.Web3Provider(
       window.ethereum as any
     );
 
-    const signer = await ethersProvider.getSigner();
+    const signer = await ethersProvider.getSigner(userAddress);
+
+    console.log({ signer });
 
     const domainType = [
       { name: "name", type: "string" },
@@ -47,24 +52,29 @@ const useHandleListItem = () => {
       { name: "functionSignature", type: "bytes" },
     ];
     let domainData = {
-      name: "TestContract",
+      name: "NftMarketplace",
       version: "1",
-      verifyingContract: NFT_MARKETPLACE_CONTRACT_ADDRESS,
-      salt: "0x" + (42).toString(16).padStart(64, "0"),
+      verifyingContract: NFT_MARKETPLACE_CONTRACT_ADDRESS_EIP_712,
+      salt: "0x" + (80001).toString(16).padStart(64, "0"),
     };
 
     const contractInstance = new ethers.Contract(
-      NFT_MARKETPLACE_CONTRACT_ADDRESS,
+      NFT_MARKETPLACE_CONTRACT_ADDRESS_EIP_712,
       NftMarketplace.abi as ContractInterface,
       signer!
     );
 
     let nonce = await contractInstance.getNonce(userAddress);
     const contractInterface = new ethers.utils.Interface(NftMarketplace.abi);
-    const functionSignature = contractInterface.encodeFunctionData("listItem", [
-      ethers.utils.getAddress(NftContractAddress),
+    // const functionSignature = contractInterface.encodeFunctionData("listItem", [
+    //   ethers.utils.getAddress(NftContractAddress),
+    //   tokenId,
+    //   price,
+    // ]);
+    let functionSignature = contractInterface.encodeFunctionData("listItem", [
+      NftContractAddress,
       tokenId,
-      price,
+      ethers.utils.parseEther("0.1"),
     ]);
 
     let message = {
@@ -89,7 +99,7 @@ const useHandleListItem = () => {
     ]);
 
     let { r, s, v } = getSignatureParametersEthers(signature);
-    sendSignedTransaction(address!, functionSignature, r, s, v);
+    sendSignedTransaction(userAddress!, functionSignature, r, s, v);
     console.log({ r, s, v });
   };
 
@@ -102,8 +112,9 @@ const useHandleListItem = () => {
   ) => {
     try {
       const provider = await biconomy?.provider;
+      console.log({ provider });
       const contractInstance = new ethers.Contract(
-        NFT_MARKETPLACE_CONTRACT_ADDRESS,
+        NFT_MARKETPLACE_CONTRACT_ADDRESS_EIP_712,
         NftMarketplace.abi,
         biconomy?.ethersProvider
       );
@@ -117,7 +128,7 @@ const useHandleListItem = () => {
         );
       let txParams = {
         data: data,
-        to: NFT_MARKETPLACE_CONTRACT_ADDRESS,
+        to: NFT_MARKETPLACE_CONTRACT_ADDRESS_EIP_712,
         from: userAddress,
         signatureType: "EIP712_SIGN",
       };
@@ -126,15 +137,15 @@ const useHandleListItem = () => {
 
       // @ts-ignore
       const tx = await provider.send("eth_sendTransaction", [txParams]);
-      console.log(tx);
+      console.log({ tx });
       biconomy?.on("txHashGenerated", (data: any) => {
-        console.log(data);
+        console.log("txHashGenerated: ", data);
       });
       biconomy?.on("txMined", (data: any) => {
-        console.log(data);
+        console.log("txMined: ", data);
       });
     } catch (error) {
-      console.log(error);
+      console.log({ error });
     }
   };
 

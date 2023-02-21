@@ -3,6 +3,7 @@ import { Box, Heading, Image, Button } from "@chakra-ui/react";
 // hooks
 import { useGetNftsByWallet } from "../../hooks/queries/useGetNftsByWallet";
 import { useAuth } from "../../contexts/useAuth";
+import useHandleListItemTwo from "./useHandleListItemTwo";
 
 // helpers
 import useHandleListItem from "./useHandleListItem";
@@ -10,6 +11,7 @@ import useHandleListItem from "./useHandleListItem";
 export default function MyItems() {
   const { user } = useAuth();
   const { handleListItem } = useHandleListItem();
+  // const { handleListItem } = useHandleListItemTwo();
 
   const { data: { ownedNfts } = {}, isLoading } = useGetNftsByWallet(user.id);
 
@@ -32,6 +34,7 @@ export default function MyItems() {
           >
             <Box>{`Title: ${title}`}</Box>
             <Image src={image} alt="NFT Image" width={300} height={300} />
+            {/* <Button onClick={() => handleListItem(id.tokenId)}>List item</Button> */}
             <Button onClick={() => handleListItem(nft)}>List item</Button>
           </Box>
         );

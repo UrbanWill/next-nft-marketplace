@@ -16,7 +16,8 @@ import { ExternalProvider } from "../../utils/types";
 // constants
 import {
   BICONOMY_API_KEY,
-  NFT_MARKETPLACE_CONTRACT_ADDRESS,
+  NFT_MARKETPLACE_CONTRACT_ADDRESS_PERSONAL_SIGN,
+  NFT_MARKETPLACE_CONTRACT_ADDRESS_EIP_712,
 } from "../../utils/constants";
 
 interface IBiconomyContext {
@@ -40,7 +41,10 @@ export function BiconomyProvider({
       const biconomy = new Biconomy(window.ethereum as ExternalProvider, {
         apiKey: BICONOMY_API_KEY,
         debug: true,
-        contractAddresses: [NFT_MARKETPLACE_CONTRACT_ADDRESS],
+        contractAddresses: [
+          NFT_MARKETPLACE_CONTRACT_ADDRESS_PERSONAL_SIGN,
+          NFT_MARKETPLACE_CONTRACT_ADDRESS_EIP_712,
+        ],
       });
       await biconomy.init();
       setBiconomy(biconomy);
