@@ -39,6 +39,9 @@ const NavBar: FC = () => {
             <Link href="/profile" passHref legacyBehavior>
               <ChakraLink>Profile</ChakraLink>
             </Link>
+            <Link href="/hailMary" passHref legacyBehavior>
+              <ChakraLink>Hail Mary</ChakraLink>
+            </Link>
           </>
         )}
       </Flex>
