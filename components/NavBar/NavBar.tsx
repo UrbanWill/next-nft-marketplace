@@ -1,13 +1,27 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import { Box, Flex, Button, Link as ChakraLink } from "@chakra-ui/react";
+import { useAccount, useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
 // hooks
 import { useAuth } from "../../contexts/useAuth";
 
 const NavBar: FC = () => {
+  const [isClientConnected, setIsClientConnected] = useState(false);
   const { handleAuthLogin, handleAuthLogout, isAuthenticated, isLoading } =
     useAuth();
+
+  const { isConnected } = useAccount();
+
+  // Hydrates client UI connection state
+  useEffect(() => {
+    setIsClientConnected(isConnected);
+  }, [isConnected]);
+
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
 
   return (
     <Flex backgroundColor="blue.400" height="4rem" alignItems="center" px={5}>
@@ -45,9 +59,13 @@ const NavBar: FC = () => {
         </Box>
       ) : (
         <Box ml="auto">
-          <Button onClick={handleAuthLogin} isLoading={isLoading}>
-            Login
-          </Button>
+          {!isClientConnected ? (
+            <Button onClick={() => connect()}>Connect Wallet</Button>
+          ) : (
+            <Button onClick={handleAuthLogin} isLoading={isLoading}>
+              Login
+            </Button>
+          )}
         </Box>
       )}
     </Flex>

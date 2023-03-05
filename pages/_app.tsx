@@ -5,6 +5,9 @@ import { ApolloProvider } from "@apollo/client";
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { WagmiConfig, createClient, configureChains } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
+import { polygon, polygonMumbai } from "@wagmi/chains";
 
 // hooks
 import { useApollo } from "../hooks/useApollo";
@@ -24,26 +27,37 @@ export default function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState);
   const { pathname } = useRouter();
 
-  // const queryClient = new QueryClient();
+  const { chains, provider, webSocketProvider } = configureChains(
+    [IS_DEV_MODE ? polygonMumbai : polygon],
+    [publicProvider()]
+  );
+
+  const wagmiClient = createClient({
+    autoConnect: true,
+    provider,
+    webSocketProvider,
+  });
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {IS_DEV_MODE && <ReactQueryDevtools initialIsOpen={false} />}
-      <ChakraProvider>
-        <ApolloProvider client={apolloClient}>
-          <AuthProvider>
-            <Layout>
-              {noAuthRequired.includes(pathname) ? (
-                <Component {...pageProps} />
-              ) : (
-                <ProtectedRoute>
+    <WagmiConfig client={wagmiClient}>
+      <QueryClientProvider client={queryClient}>
+        {IS_DEV_MODE && <ReactQueryDevtools initialIsOpen={false} />}
+        <ChakraProvider>
+          <ApolloProvider client={apolloClient}>
+            <AuthProvider>
+              <Layout>
+                {noAuthRequired.includes(pathname) ? (
                   <Component {...pageProps} />
-                </ProtectedRoute>
-              )}
-            </Layout>
-          </AuthProvider>
-        </ApolloProvider>
-      </ChakraProvider>
-    </QueryClientProvider>
+                ) : (
+                  <ProtectedRoute>
+                    <Component {...pageProps} />
+                  </ProtectedRoute>
+                )}
+              </Layout>
+            </AuthProvider>
+          </ApolloProvider>
+        </ChakraProvider>
+      </QueryClientProvider>
+    </WagmiConfig>
   );
 }
