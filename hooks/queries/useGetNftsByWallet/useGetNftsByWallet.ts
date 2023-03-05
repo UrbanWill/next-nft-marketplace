@@ -16,6 +16,9 @@ interface Nft {
   id: {
     tokenId: string;
   };
+  contract: {
+    address: string;
+  };
   metadata: NftMetadata;
 }
 

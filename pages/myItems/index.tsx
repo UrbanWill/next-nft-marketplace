@@ -16,10 +16,15 @@ export default function MyItems() {
     <Box>
       <Heading as="h3">My Items</Heading>
       {ownedNfts?.map((nft) => {
-        const { title, id, metadata } = nft;
-        const { image } = metadata;
+        const {
+          title,
+          id: { tokenId },
+          metadata: { image },
+          contract: { address },
+        } = nft;
+
         return (
-          <Box key={id.tokenId} py={2} my={2} border="2px solid black">
+          <Box key={tokenId + address} py={2} my={2} border="2px solid black">
             <Box>{`Title: ${title}`}</Box>
             <Image src={image} alt="NFT Image" width={300} height={300} />
           </Box>
