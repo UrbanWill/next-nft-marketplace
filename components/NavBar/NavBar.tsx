@@ -53,7 +53,7 @@ const NavBar: FC = () => {
           </>
         )}
       </Flex>
-      {isAuthenticated ? (
+      {isAuthenticated && isClientConnected ? (
         <Box ml="auto">
           <Button onClick={handleAuthLogout}>Logout</Button>
         </Box>
