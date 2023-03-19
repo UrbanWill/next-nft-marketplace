@@ -13,7 +13,7 @@ import {
 import { User, Role } from "../../generated/auth";
 
 // hooks
-import { useSigninWIthWallet } from "../../hooks/mutations/useSigninWIthWallet";
+import { useSigninWithWallet } from "../../hooks/mutations/useSigninWithWallet";
 
 interface IAuthContext {
   handleAuthLogin: () => void;
@@ -43,7 +43,7 @@ export function AuthProvider({
 
   const router = useRouter();
 
-  const { handleLogin } = useSigninWIthWallet();
+  const { handleLogin } = useSigninWithWallet();
 
   useEffect(() => {
     setIsLoading(true);

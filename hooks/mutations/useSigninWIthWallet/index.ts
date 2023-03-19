@@ -1,1 +1,1 @@
-export { useSigninWIthWallet } from "./useSigninWIthWallet";
+export { useSigninWithWallet } from "./useSigninWithWallet";

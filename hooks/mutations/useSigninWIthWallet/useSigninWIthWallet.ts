@@ -7,7 +7,7 @@ import {
   UserWithToken,
 } from "../../../generated/auth";
 
-export const useSigninWIthWallet = () => {
+export const useSigninWithWallet = () => {
   const [getNonceToSign] = useGetNonceToSignLazyQuery({
     fetchPolicy: "network-only",
   });

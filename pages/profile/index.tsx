@@ -14,7 +14,7 @@ export default function Profile() {
           <Box>{`Chain: ${chain?.name}`}</Box>
         </Box>
       ) : (
-        <Box>Connected your wallet</Box>
+        <Box>Connect your wallet</Box>
       )}
     </Box>
   );
