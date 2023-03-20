@@ -1,16 +1,31 @@
 import { Button, Flex } from "@chakra-ui/react";
+import { ethers } from "ethers";
 
 // hooks
 import useMetaTx from "../../hooks/mutations/useMetaTx/useMetaTx";
-import useListItem from "../../hooks/mutations/useListItem/useListItem";
 
+// abis
+import BasicNft from "../../contracts/abis/BasicNft.json";
+
+const tokenId = 15;
+const price = ethers.utils.parseEther("0.1");
+
+// Temporary page to test gasless transactions
 export default function GaslessTxTest() {
-  const { handleSetQuote } = useMetaTx();
-  const { handleListItem } = useListItem();
+  const { handleMetaTx } = useMetaTx();
+
   return (
     <Flex gap={2} py={2}>
-      <Button onClick={handleSetQuote}>Meta Tx Set Quote</Button>
-      <Button onClick={handleListItem}>Meta Tx List Item</Button>
+      <Button
+        onClick={() =>
+          handleMetaTx({
+            functionName: "listItem",
+            values: [BasicNft.contract.address, tokenId, price],
+          })
+        }
+      >
+        Meta Tx listItem
+      </Button>
     </Flex>
   );
 }

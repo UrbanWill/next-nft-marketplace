@@ -7,18 +7,23 @@ import { ethers, ContractInterface } from "ethers";
 import { getSignatureParametersEthers } from "../../../utils/getSignatureParametersEthers";
 
 // abis
-import Custom_EIP712Sign_Biconomy from "../../../contracts/abis/Custom_EIP712Sign_Biconomy.json";
+import NftMarketplace from "../../../contracts/abis/NftMarketplace.json";
 
-const config = Custom_EIP712Sign_Biconomy;
+const config = NftMarketplace;
 
+interface MetaTx {
+  functionName: string;
+  values: any[];
+}
+
+// Generic hook to handle meta transactions for NftMarketplace contract
 const useMetaTx = () => {
   const { user } = useAuth();
   const { biconomy } = useBiconomy();
 
   const { id: userAddress } = user;
-  const handleSetQuote = async () => {
+  const handleMetaTx = async ({ functionName, values }: MetaTx) => {
     console.log("Sending meta transaction");
-    // const web3 = new Web3(window.ethereum as any);
     const ethersProvider = new ethers.providers.Web3Provider(
       window.ethereum as any
     );
@@ -35,7 +40,7 @@ const useMetaTx = () => {
       { name: "functionSignature", type: "bytes" },
     ];
     let domainData = {
-      name: "TestContract",
+      name: config.contract.name,
       version: "1",
       verifyingContract: config.contract.address,
       salt: "0x" + (80001).toString(16).padStart(64, "0"),
@@ -47,8 +52,8 @@ const useMetaTx = () => {
     );
     let nonce = await contractInstance.getNonce(userAddress);
     const contractInterface = new ethers.utils.Interface(config.contract.abi);
-    let functionSignature = contractInterface.encodeFunctionData("setQuote", [
-      "2",
+    let functionSignature = contractInterface.encodeFunctionData(functionName, [
+      ...values,
     ]);
     let message = {
       nonce: parseInt(nonce),
@@ -89,7 +94,6 @@ const useMetaTx = () => {
         return;
       }
       const provider = await biconomy.provider;
-      console.log({ provider });
       const contractInstance = new ethers.Contract(
         config.contract.address,
         config.contract.abi,
@@ -120,11 +124,11 @@ const useMetaTx = () => {
         console.log(data);
       });
     } catch (error) {
-      console.log(error);
+      console.log({ error });
     }
   };
 
-  return { handleSetQuote };
+  return { handleMetaTx };
 };
 
 export default useMetaTx;
