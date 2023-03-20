@@ -7,7 +7,7 @@ import useMetaTx from "../../hooks/mutations/useMetaTx/useMetaTx";
 // abis
 import BasicNft from "../../contracts/abis/BasicNft.json";
 
-const tokenId = 15;
+const tokenId = 16;
 const price = ethers.utils.parseEther("0.1");
 
 // Temporary page to test gasless transactions

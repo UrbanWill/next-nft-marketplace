@@ -1,6 +1,6 @@
 {
   "contract": {
-    "address": "0x5BD19ce38F2C05E5910e869F2ccA685A22934f9a",
+    "address": "0x33605A4247052598FE08966eeA8e6e91b7DA9A3B",
     "name": "NftMarketplace",
     "abi": [
       {
@@ -262,31 +262,6 @@
           { "internalType": "uint256", "name": "price", "type": "uint256" }
         ],
         "name": "listItem",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-          { "internalType": "address", "name": "", "type": "address" }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "quote",
-        "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          { "internalType": "string", "name": "newQuote", "type": "string" }
-        ],
-        "name": "setQuote",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
