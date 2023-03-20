@@ -18,15 +18,17 @@
     "@emotion/styled": "^11.10.5",
     "@tanstack/react-query": "^4.20.4",
     "@tanstack/react-query-devtools": "^4.20.4",
+    "@wagmi/chains": "^0.2.9",
     "axios": "^1.2.2",
     "deepmerge": "^4.2.2",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
+    "ethers": "^5",
     "framer-motion": "^7.6.1",
     "graphql": "^16.6.0",
-    "next": "13.0.0",
+    "next": "^13.2.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "wagmi": "^0.11.7"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.13.8",
