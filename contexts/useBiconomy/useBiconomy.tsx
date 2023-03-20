@@ -18,6 +18,7 @@ import { BICONOMY_API_KEY } from "../../utils/constants";
 
 // abis
 import Custom_EIP712Sign_Biconomy from "../../contracts/abis/Custom_EIP712Sign_Biconomy.json";
+import NftMarketplace from "../../contracts/abis/NftMarketplace.json";
 
 interface IBiconomyContext {
   biconomy: Biconomy | null;
@@ -40,7 +41,10 @@ export function BiconomyProvider({
       const biconomy = new Biconomy(window.ethereum as ExternalProvider, {
         apiKey: BICONOMY_API_KEY,
         debug: true,
-        contractAddresses: [Custom_EIP712Sign_Biconomy.contract.address],
+        contractAddresses: [
+          Custom_EIP712Sign_Biconomy.contract.address,
+          NftMarketplace.contract.address,
+        ],
       });
       await biconomy.init();
       setBiconomy(biconomy);

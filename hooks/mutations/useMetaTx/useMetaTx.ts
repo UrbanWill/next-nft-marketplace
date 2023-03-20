@@ -16,7 +16,7 @@ const useMetaTx = () => {
   const { biconomy } = useBiconomy();
 
   const { id: userAddress } = user;
-  const handleListItem = async () => {
+  const handleSetQuote = async () => {
     console.log("Sending meta transaction");
     // const web3 = new Web3(window.ethereum as any);
     const ethersProvider = new ethers.providers.Web3Provider(
@@ -124,7 +124,7 @@ const useMetaTx = () => {
     }
   };
 
-  return { handleListItem };
+  return { handleSetQuote };
 };
 
 export default useMetaTx;

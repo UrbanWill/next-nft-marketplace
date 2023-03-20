@@ -26,6 +26,7 @@ export default function MyItems() {
         return (
           <Box key={tokenId + address} py={2} my={2} border="2px solid black">
             <Box>{`Title: ${title}`}</Box>
+            <Box>{`Token ID: ${tokenId}`}</Box>
             <Image src={image} alt="NFT Image" width={300} height={300} />
           </Box>
         );
