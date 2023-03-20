@@ -13,7 +13,7 @@ import {
 import { User, Role } from "../../generated/auth";
 
 // hooks
-import { useSigninWithWallet } from "../../hooks/mutations/temp_renamed_folder";
+import { useSigninWithWallet } from "../../hooks/mutations/useSigninWithWallet";
 
 interface IAuthContext {
   handleAuthLogin: () => void;
