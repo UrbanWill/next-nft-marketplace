@@ -50,6 +50,9 @@ const NavBar: FC = () => {
             <Link href="/profile" passHref legacyBehavior>
               <ChakraLink>Profile</ChakraLink>
             </Link>
+            <Link href="/gaslessTxTest" passHref legacyBehavior>
+              <ChakraLink>Gasless Tx Test</ChakraLink>
+            </Link>
           </>
         )}
       </Flex>
