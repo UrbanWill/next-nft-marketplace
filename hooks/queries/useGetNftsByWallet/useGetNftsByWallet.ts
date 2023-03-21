@@ -6,26 +6,12 @@ import { ethers } from "ethers";
 import { NFTS_BY_WALLET } from "../../../utils/queryKeys";
 import { MATIC_RPC_URL } from "../../../utils/constants";
 
-interface NftMetadata {
-  name: string;
-  description: string;
-  image: string;
-}
-
-interface Nft {
-  title: string;
-  id: {
-    tokenId: string;
-  };
-  contract: {
-    address: string;
-  };
-  metadata: NftMetadata;
-}
+// types
+import { INftMetadata, INft } from "../../../utils/types";
 
 interface NftResponse {
   blockNumber: string;
-  ownedNfts: Nft[];
+  ownedNfts: INft[];
 }
 
 export const fetchNfts = async (
@@ -37,7 +23,7 @@ export const fetchNfts = async (
   const { ownedNfts } = data;
   return {
     ...data,
-    ownedNfts: ownedNfts.map((nft: Nft) => ({
+    ownedNfts: ownedNfts.map((nft: INft) => ({
       ...nft,
       id: {
         ...nft.id,
