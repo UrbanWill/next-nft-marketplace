@@ -5,11 +5,18 @@ import { Box, Heading, Image, Button, Flex } from "@chakra-ui/react";
 import { useGetNftsByWallet } from "../../hooks/queries/useGetNftsByWallet";
 import { useAuth } from "../../contexts/useAuth";
 import { useMetaTx } from "../../hooks/mutations/useMetaTx";
+import { useAccount } from "wagmi";
+import { useIsApprovedForAll } from "../../hooks/mutations/useIsApprovedForAll";
 
 export default function MyItems() {
   const { user } = useAuth();
+  const { address } = useAccount();
   const { data: { ownedNfts } = {}, isLoading } = useGetNftsByWallet(user.id);
   const { handleMetaTx } = useMetaTx();
+  const { data: isMarketplaceApproved, isLoading: isApprovalForAllLoading } =
+    useIsApprovedForAll({ address });
+
+  console.log({ isMarketplaceApproved, isApprovalForAllLoading });
 
   const price = ethers.utils.parseEther("0.1");
 

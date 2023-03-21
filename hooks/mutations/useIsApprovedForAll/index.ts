@@ -1,0 +1,1 @@
+export { useIsApprovedForAll } from "./useIsApprovedForAll";
