@@ -4,7 +4,7 @@ import { Box, Heading, Image, Button, Flex } from "@chakra-ui/react";
 // hooks
 import { useGetNftsByWallet } from "../../hooks/queries/useGetNftsByWallet";
 import { useAuth } from "../../contexts/useAuth";
-import useMetaTx from "../../hooks/mutations/useMetaTx/useMetaTx";
+import { useMetaTx } from "../../hooks/mutations/useMetaTx";
 
 export default function MyItems() {
   const { user } = useAuth();
