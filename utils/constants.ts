@@ -13,7 +13,6 @@ export const MATIC_RPC_URL =
 
 export const MATIC_NETWORK_ID = 80001;
 
-export const BASIC_NFT_CONTRACT_ADDRESS =
-  "0x6F4344FB1354ffe3e08deC7fd0479Dc5FB0EF7FB";
-
 export const IPFS_URL = "https://ipfs.io/ipfs/";
+
+export const BICONOMY_API_KEY = process.env.NEXT_PUBLIC_BICONOMY_API_KEY || "";

@@ -11,7 +11,10 @@ import { polygon, polygonMumbai } from "@wagmi/chains";
 
 // hooks
 import { useApollo } from "../hooks/useApollo";
+
+// providers
 import { AuthProvider } from "../contexts/useAuth/useAuth";
+import { BiconomyProvider } from "../contexts/useBiconomy/useBiconomy";
 
 // components
 import { Layout } from "../components/Layout";
@@ -45,15 +48,17 @@ export default function App({ Component, pageProps }: AppProps) {
         <ChakraProvider>
           <ApolloProvider client={apolloClient}>
             <AuthProvider>
-              <Layout>
-                {noAuthRequired.includes(pathname) ? (
-                  <Component {...pageProps} />
-                ) : (
-                  <ProtectedRoute>
+              <BiconomyProvider>
+                <Layout>
+                  {noAuthRequired.includes(pathname) ? (
                     <Component {...pageProps} />
-                  </ProtectedRoute>
-                )}
-              </Layout>
+                  ) : (
+                    <ProtectedRoute>
+                      <Component {...pageProps} />
+                    </ProtectedRoute>
+                  )}
+                </Layout>
+              </BiconomyProvider>
             </AuthProvider>
           </ApolloProvider>
         </ChakraProvider>
