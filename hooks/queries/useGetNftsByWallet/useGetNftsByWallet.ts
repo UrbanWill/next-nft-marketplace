@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { ethers } from "ethers";
 
 // constants
 import { NFTS_BY_WALLET } from "../../../utils/queryKeys";
@@ -33,7 +34,17 @@ export const fetchNfts = async (
   const { data } = await axios.get(
     `${MATIC_RPC_URL}/getNFTs/?owner=${walletAddress}`
   );
-  return data;
+  const { ownedNfts } = data;
+  return {
+    ...data,
+    ownedNfts: ownedNfts.map((nft: Nft) => ({
+      ...nft,
+      id: {
+        ...nft.id,
+        tokenId: ethers.BigNumber.from(nft.id.tokenId).toNumber(),
+      },
+    })),
+  };
 };
 
 const useGetNftsByWallet = (walletAddress: string) => {
