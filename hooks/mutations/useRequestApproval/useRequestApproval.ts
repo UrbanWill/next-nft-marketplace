@@ -1,4 +1,4 @@
-import { ethers, Contract } from "ethers";
+import { Contract } from "ethers";
 import { useMutation } from "@tanstack/react-query";
 import { useContract, useSigner } from "wagmi";
 
@@ -6,15 +6,12 @@ import { useContract, useSigner } from "wagmi";
 import BasicNft from "../../../contracts/abis/BasicNft.json";
 import NftMarketplace from "../../../contracts/abis/NftMarketplace.json";
 
-// constants
-import { MATIC_RPC_URL, MATIC_NETWORK_ID } from "../../../utils/constants";
-
 const fetchRequestApproval = async ({
   contract,
   id,
 }: {
   contract: Contract;
-  id: string;
+  id: number;
 }) => {
   const approvalRequest = await contract.approve(
     NftMarketplace.contract.address,
@@ -27,8 +24,10 @@ const fetchRequestApproval = async ({
  */
 export const useRequestApproval = ({
   tokenContractAddress,
+  handleSuccess,
 }: {
   tokenContractAddress: string;
+  handleSuccess: () => void;
 }) => {
   const { data: signer } = useSigner();
   const BasicNftContract = useContract({
@@ -38,8 +37,15 @@ export const useRequestApproval = ({
   }) as Contract;
 
   const requestApproval = useMutation({
-    mutationFn: ({ id }: { id: string }) => {
-      return fetchRequestApproval({ contract: BasicNftContract, id });
+    mutationFn: async ({ id }: { id: number }) => {
+      return await fetchRequestApproval({ contract: BasicNftContract, id });
+    },
+    onSuccess: (data) => {
+      console.log("Request approval success", data);
+      handleSuccess();
+    },
+    onError: (error) => {
+      console.log("Request approval error", error);
     },
   });
 

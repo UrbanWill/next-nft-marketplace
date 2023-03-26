@@ -1,1 +1,1 @@
-export { useIsApprovedForAll } from "./useIsApprovedForAll";
+export { useIsApproved } from "./useIsApproved";

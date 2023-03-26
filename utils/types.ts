@@ -23,7 +23,7 @@ export interface INftMetadata {
 export interface INft {
   title: string;
   id: {
-    tokenId: string;
+    tokenId: number;
   };
   contract: {
     address: string;
