@@ -15,26 +15,35 @@ const provider = new ethers.providers.JsonRpcProvider(
   MATIC_RPC_URL,
   MATIC_NETWORK_ID
 );
-
-const basicNftContract = new ethers.Contract(
-  BasicNft.contract.address,
-  BasicNft.contract.abi,
-  provider
-);
-
-const fetchIsApprovedForAll = async ({ address }: { address?: string }) => {
-  const isMarketplaceApproved = await basicNftContract.isApprovedForAll(
+const fetchIsApproved = async ({
+  address,
+  tokenId,
+}: {
+  address: string;
+  tokenId: number;
+}) => {
+  const basicNftContract = new ethers.Contract(
     address,
-    NftMarketplace.contract.address
+    BasicNft.contract.abi,
+    provider
   );
+  const approvedAddress = await basicNftContract.getApproved(tokenId);
+  const isMarketplaceApproved =
+    approvedAddress === NftMarketplace.contract.address;
   return isMarketplaceApproved;
 };
 
 /** Checks if NftMarketplace contract is approved to transact the token */
-export const useIsApprovedForAll = ({ address }: { address?: string }) => {
+export const useIsApproved = ({
+  address,
+  tokenId,
+}: {
+  address: string;
+  tokenId: number;
+}) => {
   return useQuery(
-    [IS_APPROVED_FOR_ALL, address],
-    () => fetchIsApprovedForAll({ address }),
+    [IS_APPROVED_FOR_ALL, address, tokenId],
+    () => fetchIsApproved({ address, tokenId }),
     {
       enabled: !!address,
     }
