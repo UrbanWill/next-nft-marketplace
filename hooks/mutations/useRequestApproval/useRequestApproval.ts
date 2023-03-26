@@ -9,11 +9,6 @@ import NftMarketplace from "../../../contracts/abis/NftMarketplace.json";
 // constants
 import { MATIC_RPC_URL, MATIC_NETWORK_ID } from "../../../utils/constants";
 
-const provider = new ethers.providers.JsonRpcProvider(
-  MATIC_RPC_URL,
-  MATIC_NETWORK_ID
-);
-
 const fetchRequestApproval = async ({
   contract,
   id,
@@ -27,7 +22,9 @@ const fetchRequestApproval = async ({
   );
   return approvalRequest;
 };
-
+/*
+ * Custom hook to request NFT contract to approve marketplace contract to transact NFT
+ */
 export const useRequestApproval = ({
   tokenContractAddress,
 }: {

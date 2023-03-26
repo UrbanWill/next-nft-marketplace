@@ -1,5 +1,4 @@
-import { ethers } from "ethers";
-import { Box, Heading, Image, Button, Flex } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 
 // hooks
 import { useGetNftsByWallet } from "../../hooks/queries/useGetNftsByWallet";
@@ -8,17 +7,17 @@ import { useMetaTx } from "../../hooks/mutations/useMetaTx";
 import { useAccount } from "wagmi";
 import { useIsApprovedForAll } from "../../hooks/mutations/useIsApprovedForAll";
 
+// components
+import { MyNFTCard } from "../../components/MyNFTCard";
+
 export default function MyItems() {
   const { user } = useAuth();
   const { address } = useAccount();
   const { data: { ownedNfts } = {}, isLoading } = useGetNftsByWallet(user.id);
   const { handleMetaTx } = useMetaTx();
+  // TODO: Hook useIsApprovedForAll should check for individual NFT approval in MyNFTCard component
   const { data: isMarketplaceApproved, isLoading: isApprovalForAllLoading } =
     useIsApprovedForAll({ address });
-
-  console.log({ isMarketplaceApproved, isApprovalForAllLoading });
-
-  const price = ethers.utils.parseEther("0.1");
 
   if (isLoading) {
     return <Heading as="h3">Loading...</Heading>;
@@ -29,40 +28,17 @@ export default function MyItems() {
       <Heading as="h3">My Items</Heading>
       {ownedNfts?.map((nft) => {
         const {
-          title,
           id: { tokenId },
-          metadata: { image },
+
           contract: { address },
         } = nft;
 
         return (
-          <Box key={tokenId + address} p={2} my={2} border="2px solid black">
-            <Box>{`Title: ${title}`}</Box>
-            <Box>{`Token ID: ${tokenId}`}</Box>
-            <Image src={image} alt="NFT Image" width={300} height={300} />
-            <Flex gap={2}>
-              <Button
-                onClick={() =>
-                  handleMetaTx({
-                    functionName: "listItem",
-                    values: [address, tokenId, price],
-                  })
-                }
-              >
-                List item
-              </Button>
-              <Button
-                onClick={() =>
-                  handleMetaTx({
-                    functionName: "cancelListing",
-                    values: [address, tokenId],
-                  })
-                }
-              >
-                Cancel item listing
-              </Button>
-            </Flex>
-          </Box>
+          <MyNFTCard
+            nft={nft}
+            key={tokenId + address}
+            handleMetaTx={handleMetaTx}
+          />
         );
       })}
     </Box>
