@@ -1,5 +1,5 @@
-query ActiveItems {
-  activeItems {
+query ActiveItems($buyer_not: Bytes) {
+  activeItems(where: { buyer_not: $buyer_not }) {
     id
     buyer
     seller
