@@ -13,3 +13,20 @@ export type ExternalProvider = {
   ) => void;
   request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
 };
+
+export interface INftMetadata {
+  name: string;
+  description: string;
+  image: string;
+}
+
+export interface INft {
+  title: string;
+  id: {
+    tokenId: number;
+  };
+  contract: {
+    address: string;
+  };
+  metadata: INftMetadata;
+}

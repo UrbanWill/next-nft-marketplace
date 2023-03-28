@@ -7,6 +7,9 @@ import { ActiveItemsDocument, ActiveItem } from "../../generated/theGraph";
 // components
 import { NFTCard } from "../../components/NFTCard";
 
+// constants
+import { DEAD_ADDRESS } from "../../utils/constants";
+
 export default function ActiveItems({
   activeItems,
 }: {
@@ -24,8 +27,12 @@ export default function ActiveItems({
 
 export async function getServerSideProps() {
   const client = initializeApollo();
+
   const { data: { activeItems } = {} } = await client.query({
     query: ActiveItemsDocument,
+    variables: {
+      buyer_not: DEAD_ADDRESS,
+    },
   });
 
   return {

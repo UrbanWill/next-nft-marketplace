@@ -2,7 +2,7 @@ import { Button, Flex } from "@chakra-ui/react";
 import { ethers } from "ethers";
 
 // hooks
-import useMetaTx from "../../hooks/mutations/useMetaTx/useMetaTx";
+import { useMetaTx } from "../../hooks/mutations/useMetaTx";
 
 // abis
 import BasicNft from "../../contracts/abis/BasicNft.json";

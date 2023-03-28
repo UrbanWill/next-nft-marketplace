@@ -3,7 +3,7 @@ export const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
 export const THE_GRAPH_URI =
   process.env.THE_GRAPH_URL ||
-  "https://api.thegraph.com/subgraphs/name/urbanwill/graph-nft-marketplace";
+  "https://api.thegraph.com/subgraphs/name/urbanwill/nft-marketplace-v2";
 
 export const GOERLI_RPC_URL =
   "https://eth-goerli.g.alchemy.com/v2/aqz1LBXUFqx_-vK0i5He9wbAuZrknsHk";
@@ -16,3 +16,5 @@ export const MATIC_NETWORK_ID = 80001;
 export const IPFS_URL = "https://ipfs.io/ipfs/";
 
 export const BICONOMY_API_KEY = process.env.NEXT_PUBLIC_BICONOMY_API_KEY || "";
+
+export const DEAD_ADDRESS = "0x000000000000000000000000000000000000dead";

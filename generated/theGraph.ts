@@ -31,9 +31,14 @@ export type ActiveItem = {
 export type ActiveItem_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<ActiveItem_Filter>>>;
   buyer?: InputMaybe<Scalars['Bytes']>;
   buyer_contains?: InputMaybe<Scalars['Bytes']>;
+  buyer_gt?: InputMaybe<Scalars['Bytes']>;
+  buyer_gte?: InputMaybe<Scalars['Bytes']>;
   buyer_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  buyer_lt?: InputMaybe<Scalars['Bytes']>;
+  buyer_lte?: InputMaybe<Scalars['Bytes']>;
   buyer_not?: InputMaybe<Scalars['Bytes']>;
   buyer_not_contains?: InputMaybe<Scalars['Bytes']>;
   buyer_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -47,10 +52,15 @@ export type ActiveItem_Filter = {
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
   nftAddress?: InputMaybe<Scalars['Bytes']>;
   nftAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  nftAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_lte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  or?: InputMaybe<Array<InputMaybe<ActiveItem_Filter>>>;
   price?: InputMaybe<Scalars['BigInt']>;
   price_gt?: InputMaybe<Scalars['BigInt']>;
   price_gte?: InputMaybe<Scalars['BigInt']>;
@@ -61,7 +71,11 @@ export type ActiveItem_Filter = {
   price_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   seller?: InputMaybe<Scalars['Bytes']>;
   seller_contains?: InputMaybe<Scalars['Bytes']>;
+  seller_gt?: InputMaybe<Scalars['Bytes']>;
+  seller_gte?: InputMaybe<Scalars['Bytes']>;
   seller_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  seller_lt?: InputMaybe<Scalars['Bytes']>;
+  seller_lte?: InputMaybe<Scalars['Bytes']>;
   seller_not?: InputMaybe<Scalars['Bytes']>;
   seller_not_contains?: InputMaybe<Scalars['Bytes']>;
   seller_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -106,9 +120,14 @@ export type ItemBought = {
 export type ItemBought_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<ItemBought_Filter>>>;
   buyer?: InputMaybe<Scalars['Bytes']>;
   buyer_contains?: InputMaybe<Scalars['Bytes']>;
+  buyer_gt?: InputMaybe<Scalars['Bytes']>;
+  buyer_gte?: InputMaybe<Scalars['Bytes']>;
   buyer_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  buyer_lt?: InputMaybe<Scalars['Bytes']>;
+  buyer_lte?: InputMaybe<Scalars['Bytes']>;
   buyer_not?: InputMaybe<Scalars['Bytes']>;
   buyer_not_contains?: InputMaybe<Scalars['Bytes']>;
   buyer_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -122,10 +141,15 @@ export type ItemBought_Filter = {
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
   nftAddress?: InputMaybe<Scalars['Bytes']>;
   nftAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  nftAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_lte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  or?: InputMaybe<Array<InputMaybe<ItemBought_Filter>>>;
   price?: InputMaybe<Scalars['BigInt']>;
   price_gt?: InputMaybe<Scalars['BigInt']>;
   price_gte?: InputMaybe<Scalars['BigInt']>;
@@ -163,6 +187,7 @@ export type ItemCanceled = {
 export type ItemCanceled_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<ItemCanceled_Filter>>>;
   id?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
@@ -173,13 +198,22 @@ export type ItemCanceled_Filter = {
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
   nftAddress?: InputMaybe<Scalars['Bytes']>;
   nftAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  nftAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_lte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  or?: InputMaybe<Array<InputMaybe<ItemCanceled_Filter>>>;
   seller?: InputMaybe<Scalars['Bytes']>;
   seller_contains?: InputMaybe<Scalars['Bytes']>;
+  seller_gt?: InputMaybe<Scalars['Bytes']>;
+  seller_gte?: InputMaybe<Scalars['Bytes']>;
   seller_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  seller_lt?: InputMaybe<Scalars['Bytes']>;
+  seller_lte?: InputMaybe<Scalars['Bytes']>;
   seller_not?: InputMaybe<Scalars['Bytes']>;
   seller_not_contains?: InputMaybe<Scalars['Bytes']>;
   seller_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -212,6 +246,7 @@ export type ItemListed = {
 export type ItemListed_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<ItemListed_Filter>>>;
   id?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
@@ -222,10 +257,15 @@ export type ItemListed_Filter = {
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
   nftAddress?: InputMaybe<Scalars['Bytes']>;
   nftAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_gte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  nftAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  nftAddress_lte?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
   nftAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  or?: InputMaybe<Array<InputMaybe<ItemListed_Filter>>>;
   price?: InputMaybe<Scalars['BigInt']>;
   price_gt?: InputMaybe<Scalars['BigInt']>;
   price_gte?: InputMaybe<Scalars['BigInt']>;
@@ -236,7 +276,11 @@ export type ItemListed_Filter = {
   price_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   seller?: InputMaybe<Scalars['Bytes']>;
   seller_contains?: InputMaybe<Scalars['Bytes']>;
+  seller_gt?: InputMaybe<Scalars['Bytes']>;
+  seller_gte?: InputMaybe<Scalars['Bytes']>;
   seller_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  seller_lt?: InputMaybe<Scalars['Bytes']>;
+  seller_lte?: InputMaybe<Scalars['Bytes']>;
   seller_not?: InputMaybe<Scalars['Bytes']>;
   seller_not_contains?: InputMaybe<Scalars['Bytes']>;
   seller_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -480,15 +524,17 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
-export type ActiveItemsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ActiveItemsQueryVariables = Exact<{
+  buyer_not?: InputMaybe<Scalars['Bytes']>;
+}>;
 
 
 export type ActiveItemsQuery = { __typename?: 'Query', activeItems: Array<{ __typename?: 'ActiveItem', id: string, buyer: any, seller: any, nftAddress: any, tokenId: any, price?: any | null }> };
 
 
 export const ActiveItemsDocument = gql`
-    query ActiveItems {
-  activeItems {
+    query ActiveItems($buyer_not: Bytes) {
+  activeItems(where: {buyer_not: $buyer_not}) {
     id
     buyer
     seller
@@ -511,6 +557,7 @@ export const ActiveItemsDocument = gql`
  * @example
  * const { data, loading, error } = useActiveItemsQuery({
  *   variables: {
+ *      buyer_not: // value for 'buyer_not'
  *   },
  * });
  */

@@ -131,4 +131,4 @@ const useMetaTx = () => {
   return { handleMetaTx };
 };
 
-export default useMetaTx;
+export { useMetaTx };
