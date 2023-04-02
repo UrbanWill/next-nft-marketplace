@@ -26,6 +26,7 @@ const NFTCard: FC<INFTCard> = ({ activeItem }) => {
   return (
     <Box border="1px solid" my="1">
       <Box>{name}</Box>
+      <Box>{`TokenId: ${tokenId}`}</Box>
       <Image src={image} alt="NFT Image" width={300} height={300} />
     </Box>
   );
